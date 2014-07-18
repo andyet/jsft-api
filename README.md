@@ -1,4 +1,4 @@
-# jsft-api - The wolves.technology api
+# The wolves.technology api
 
 ## REST API
 
@@ -10,12 +10,12 @@
     * [GET /users/{username}/tweets](#get-users-show-tweets-index)
     * [GET /users/{username}/mentions](#get-users-show-mentions-index)
 
-### Users
+### users
 
 <a name='get-users-index'></a>
 #### GET http://wolves.technology/users
 
-```
+```javascript
 [
   {
     id: "a609a5ea-81dc-46c3-9aa0-c98fffd1d3c4",
@@ -29,22 +29,22 @@
 ```
 
 <a name='get-users-show'></a>
-#### GET http://wolves.technology/users/{username}
+#### GET [http://wolves.technology/users/{username}](http://wolves.technology/users/luke)
 
-```
+```javascript
   {
-    id: "a609a5ea-81dc-46c3-9aa0-c98fffd1d3c4",
-    username: "philip"
+    id: "c6b100f3-4126-4a97-a0b8-7e4239915960",
+    username: "luke"
   }
 ```
 
 
-### Tweets
+### tweets
 
 <a name='get-tweets-index'></a>
 #### GET http://wolves.technology/tweets
 
-```
+```javascript
 [
   {
     id: "1e28f7f6-89a5-427d-a92f-9b4742af731e",
@@ -75,9 +75,9 @@
 
 
 <a name='get-users-show-tweets-index'></a>
-#### GET http://wolves.technology/users/{username}/tweets
+#### GET [http://wolves.technology/users/{username}/tweets](http://wolves.technology/users/luke/tweets)
 
-```json
+```javascript
 [
   {
     id: "245a6471-4fc1-46da-8dd1-28e7ba36c8e6",
@@ -99,9 +99,9 @@
 ```
 
 <a name='get-users-show-mentions-index'></a>
-#### GET http://wolves.technology/users/{username}/mentions
+#### GET [http://wolves.technology/users/{username}/mentions](http://wolves.technology/users/luke/mentions)
 
-```json
+```javascript
 [
   {
     id: "1e28f7f6-89a5-427d-a92f-9b4742af731e",
