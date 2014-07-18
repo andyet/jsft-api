@@ -1,0 +1,10 @@
+script(src='/primus/primus.js')
+
+h1 Hi!
+
+script.
+  var primus = Primus.connect(window.location.origin, {  });
+
+  primus.substream('/tweets').on('data', console.log.bind(console, '/tweets'));
+  primus.substream('/users/philip/tweets').on('data', console.log.bind(console, '/users/philip/tweets'));
+  primus.substream('/users/philip/mentions').on('data', console.log.bind(console, '/users/philip/mentions'));

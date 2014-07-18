@@ -1,0 +1,9 @@
+h1 Hi!
+
+form(method='POST', action='/authorize')
+  input(name='client_id', value=client_id, type='hidden')
+  input(name='redirect_uri', value=redirect_uri, type='hidden')
+  input(name='username')
+  input(name='password')
+  input(type='submit')
+
