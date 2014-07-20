@@ -2,11 +2,14 @@
 
 ## REST API
 
+* auth
+    * [
 * users
     * [GET /users](#get-users-index)
     * [GET /users/{username}](#get-users-show)
 * tweets
     * [GET /tweets](#get-tweets-index)
+    * [POST /tweets](#post-tweets)
     * [GET /users/{username}/tweets](#get-users-show-tweets-index)
     * [GET /users/{username}/mentions](#get-users-show-mentions-index)
 

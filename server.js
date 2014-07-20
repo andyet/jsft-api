@@ -5,13 +5,12 @@ var substream = require('substream');
 var _ = require('underscore');
 var config = require('getconfig');
 
-var Server = Hapi.Server;
-
-var server = new Server(config.http.host, config.http.port, {
+var server = new Hapi.Server(config.http.host, config.http.port, {
     views: {
         engines: { jade: require('jade') },
         path: __dirname + '/templates'
-    }
+    },
+    cors: true
 });
 
 var resources = {
