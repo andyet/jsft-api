@@ -14,10 +14,7 @@ var TweetFactory = new dulcimer.Model({
     createdAt: {
         type: 'string',
         required: true,
-        default: function () { return new Date(); },
-        processOut: function (value) {
-            return value.toString();
-        }
+        default: function () { return (new Date()).valueOf().toString(); },
     },
 
     user: {
