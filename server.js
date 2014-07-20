@@ -14,9 +14,9 @@ var server = new Hapi.Server(config.http.host, config.http.port, {
 });
 
 var resources = {
-    users: require('./resources/users'),
-    mentions: require('./resources/mentions'),
-    tweets: require('./resources/tweets')
+    wolves: require('./resources/users'),
+    marks: require('./resources/mentions'),
+    howls: require('./resources/tweets')
 };
 
 var validate = require('./validate-auth');
@@ -59,14 +59,14 @@ server.pack.register(require('hapi-auth-basic'), function () {
 
         primus.on('connection', function (spark) {
             Tweet.events.on('save', function (model) {
-                spark.substream('/tweets').write(model);
+                spark.substream('/howls').write(model);
 
-                channelNameForUser(model.user, 'tweets', function (err, channelName) {
+                channelNameForUser(model.user, 'howls', function (err, channelName) {
                     spark.substream(channelName).write(model);
                 });
 
                 _.flatten(model.mentions).forEach(function (userId) {
-                    channelNameForUser(userId, 'mentions', function (err, channelName) {
+                    channelNameForUser(userId, 'marks', function (err, channelName) {
                         spark.substream(channelName).write(model);
                     });
                 });

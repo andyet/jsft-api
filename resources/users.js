@@ -1,7 +1,7 @@
 var User = require('../models/user');
 
 module.exports = {
-    hasMany: ['tweets', 'mentions'],
+    hasMany: ['howls', 'marks'],
 
     index: {
         handler: function (request, reply) {
