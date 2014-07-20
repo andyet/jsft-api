@@ -8,11 +8,23 @@ var TweetFactory = new dulcimer.Model({
             return this.key;
         }
     },
+
     content: {},
+
+    createdAt: {
+        type: 'string',
+        required: true,
+        default: function () { return new Date(); },
+        processOut: function (value) {
+            return value.toString();
+        }
+    },
+
     user: {
         foreignKey: 'user',
         index: true
     },
+
     mentions: {
         private: true,
         type: 'array'
