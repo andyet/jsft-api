@@ -24,7 +24,7 @@ module.exports = {
 
     show: {
         handler: function (request, reply) {
-            var username = request.params.user_id;
+            var username = request.params.wolf_id;
             console.log('Looking up user', username);
 
             if (username === 'me') {

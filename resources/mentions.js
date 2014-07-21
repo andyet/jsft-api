@@ -4,7 +4,7 @@ var User = require('../models/user');
 module.exports = {
     index: {
         handler: function (request, reply) {
-            var username = request.params.user_id;
+            var username = request.params.wolf_id;
             var response = function (err, tweets) {
                 if (err) {
                     console.log('Error', err);
