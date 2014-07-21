@@ -13,7 +13,7 @@ module.exports = {
                     reply(new Error(err));
                 } else {
                     tweets = _.sortBy(tweets, function (tweet) {
-                        return tweet.createdAt.valueOf();
+                        return -1 * tweet.createdAt.valueOf();
                     });
                     reply(tweets);
                 }
