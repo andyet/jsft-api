@@ -32,7 +32,7 @@ module.exports = {
 
     show: {
         handler: function (request, reply) {
-            Tweets.find(request.params.howl_id, function (err, tweet) {
+            Tweets.get(request.params.howl_id, function (err, tweet) {
                 if (err) return reply(new Error(err));
                 reply(tweet);
             });
