@@ -5,6 +5,6 @@ h1 Hi!
 script.
   var primus = Primus.connect(window.location.origin, {  });
 
-  primus.substream('/tweets').on('data', console.log.bind(console, '/tweets'));
-  primus.substream('/users/philip/tweets').on('data', console.log.bind(console, '/users/philip/tweets'));
-  primus.substream('/users/philip/mentions').on('data', console.log.bind(console, '/users/philip/mentions'));
+  primus.substream('/howls').on('data', console.log.bind(console, '/tweets'));
+  primus.substream('/wolves/philip/howls').on('data', console.log.bind(console, '/wolves/philip/howls'));
+  primus.substream('/wolves/philip/mentions').on('data', console.log.bind(console, '/wolves/philip/mentions'));
