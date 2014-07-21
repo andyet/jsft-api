@@ -25,19 +25,25 @@ module.exports = {
     show: {
         handler: function (request, reply) {
             var username = request.params.wolf_id;
-            console.log('Looking up user', username);
 
             if (username === 'me') {
                 if (!request.auth.credentials) {
+                    console.log('Not logged in');
                     reply(new Error('Not logged in'));
                 } else {
                     reply(request.auth.credentials);
                 }
             } else {
                 User.findByIndex('username', username, function (err, user) {
-                    if (err) return reply(new Error(err));
+                    if (err) {
+                        console.log('Error finding', username, err);
+                        return reply(new Error(err));
+                    }
 
-                    if (!user) return reply(new Error('No user with username', username));
+                    if (!user) {
+                        console.log('No user with username', username);
+                        return reply(new Error('No user with username', username));
+                    }
 
                     return reply(user);
                 });
