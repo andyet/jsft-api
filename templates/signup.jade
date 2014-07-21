@@ -1,7 +1,19 @@
-h1 Signup
+extends layout
 
-form(method='POST', action='/wolves')
-  input(name='username')
-  input(name='password')
-  input(type='submit')
+block content
+  .panel.panel-info
 
+    .panel-heading
+      h3.panel-title Signup for wolves
+
+    .panel-body
+      form(method='POST', action='/wolves', class='form')
+        .form-group
+          label Username
+          input(name='username', placeholder='username', class='form-control')
+
+        .form-group
+          label Password
+          input(name='password', placeholder='password', class='form-control')
+
+        button(type='submit', class='btn btn-info') start howling

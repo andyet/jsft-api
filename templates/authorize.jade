@@ -1,9 +1,22 @@
-h1 Hi!
+extends layout
 
-form(method='POST', action='/authorize')
-  input(name='client_id', value=client_id, type='hidden')
-  input(name='redirect_uri', value=redirect_uri, type='hidden')
-  input(name='username')
-  input(name='password')
-  input(type='submit')
+block content
+  .panel.panel-info
 
+    .panel-heading
+      h3.panel-title Authorize 3rd party app to your wolves account
+
+    .panel-body
+      form(method='POST', action='/authorize')
+        input(name='client_id', value=client_id, type='hidden')
+        input(name='redirect_uri', value=redirect_uri, type='hidden')
+
+        .form-group
+          label Username
+          input(name='username', placeholder='username', class='form-control')
+
+        .form-group
+          label Password
+          input(name='password', placeholder='password', class='form-control')
+
+        button(type='submit', class='btn btn-info') authorize

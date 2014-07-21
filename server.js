@@ -43,6 +43,7 @@ function channelNameForUser(userId, channelType, done) {
     });
 }
 
+server.pack.register(require('lout'), function () {});
 server.pack.register(require('hapi-auth-basic'), function () {
     server.auth.strategy('simple', 'basic', { validateFunc: validate });
 
