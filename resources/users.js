@@ -25,12 +25,13 @@ module.exports = {
     show: {
         handler: function (request, reply) {
             var username = request.params.user_id;
+            console.log('Looking up user', username);
 
-            if (username === 'me') { 
+            if (username === 'me') {
                 if (!request.auth.credentials) {
                     reply(new Error('Not logged in'));
                 } else {
-                    reply(request.auth.credentials); 
+                    reply(request.auth.credentials);
                 }
             } else {
                 User.findByIndex('username', username, function (err, user) {
