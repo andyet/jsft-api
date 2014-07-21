@@ -43,6 +43,7 @@ module.exports = {
         handler: function (request, reply) {
             var tweet = Tweets.create(request.payload);
             tweet.user = request.auth.credentials.id;
+            tweet.createdAt = new Date().valueOf().toString();
 
             findMentions(tweet.content, function (err, ids) {
                 if (err) return reply(new Error(err));
