@@ -45,6 +45,7 @@ module.exports = {
                         return reply(new Error('No user with username', username));
                     }
 
+                    console.log('Found user', user);
                     return reply(user);
                 });
             }
