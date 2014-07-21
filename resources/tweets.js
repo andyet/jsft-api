@@ -1,6 +1,7 @@
 var Tweets = require('../models/tweet');
 var User = require('../models/user');
 var findMentions = require('../find-mentions');
+var _ = require('underscore');
 
 module.exports = {
     index: {
@@ -11,6 +12,9 @@ module.exports = {
                     console.log('Error', err);
                     reply(new Error(err));
                 } else {
+                    tweets = _.sortBy(tweets, function (tweet) {
+                        return tweet.createdAt.valueOf();
+                    });
                     reply(tweets);
                 }
             };
