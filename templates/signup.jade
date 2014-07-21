@@ -7,13 +7,17 @@ block content
       h3.panel-title Signup for wolves
 
     .panel-body
+      if err
+        div.alert.alert-warning
+          p= err
+
       form(method='POST', action='/wolves', class='form')
         .form-group
           label Username
-          input(name='username', placeholder='username', class='form-control')
+          input(name='username', placeholder='username', class='form-control', value=username || '')
 
         .form-group
           label Password
-          input(name='password', placeholder='password', class='form-control')
+          input(name='password', placeholder='password (not very well secured)', class='form-control')
 
         button(type='submit', class='btn btn-info') start howling

@@ -15,10 +15,22 @@ module.exports = {
     create: function (request, reply) {
         var user = User.create(request.payload);
 
-        user.save(function (err) {
-            if (err) return reply(new Error(err));
+        if ( (!user.username || user.username.trim() === '') || (!user.password || user.password.trim() === '')) {
+            return reply().redirect('/signup?err=' + encodeURIComponent('username and password are both required') + '&username=' + encodeURIComponent(user.username || ''));
+        }
 
-            reply('ok');
+        User.findByIndex('username', user.username, function (err, existingUser) {
+
+            if (existingUser) {
+                var errMessage = 'A wolf with username ' + user.username + ' already exists';
+                return reply().redirect('/signup?err=' + encodeURIComponent(errMessage));
+            }
+
+            user.save(function (err) {
+                if (err) return reply(new Error(err));
+
+                reply.view('registered', { username: user.username });
+            });
         });
     },
 

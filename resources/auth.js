@@ -9,7 +9,10 @@ module.exports = function () {
         method: 'GET',
         path: '/signup',
         handler: function (request, reply) {
-            reply.view('signup');
+            reply.view('signup', {
+                err: request.query.err,
+                username: request.query.username
+            });
         }
     });
 
