@@ -10,7 +10,10 @@ var server = new Hapi.Server(config.http.host, config.http.port, {
         engines: { jade: require('jade') },
         path: __dirname + '/templates'
     },
-    cors: true
+    cors: {
+        origin: ['*'],
+        headers: ['Authorization', 'Content-Type', 'If-None-Match', 'Auth-Token']
+    }
 });
 
 var resources = {
