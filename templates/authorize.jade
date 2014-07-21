@@ -8,15 +8,20 @@ block content
 
     .panel-body
       form(method='POST', action='/authorize')
-        input(name='client_id', value=client_id, type='hidden')
-        input(name='redirect_uri', value=redirect_uri, type='hidden')
+        if !redirect_uri
+          div.alert.alert-error
+            p To authorize a <code>redirect_uri</code> is required.
+            p So redirect to this page like this: <br><code>http://wolves.technology/authorize?redirect_uri=http%3A%2F%2Fmyapp.com%2Fauth%2Fcallback</code>
+        else
+          input(name='client_id', value=client_id, type='hidden')
+          input(name='redirect_uri', value=redirect_uri, type='hidden')
 
-        .form-group
-          label Username
-          input(name='username', placeholder='username', class='form-control')
+          .form-group
+            label Username
+            input(name='username', placeholder='username', class='form-control')
 
-        .form-group
-          label Password
-          input(name='password', placeholder='password', class='form-control')
+          .form-group
+            label Password
+            input(name='password', placeholder='password', class='form-control')
 
-        button(type='submit', class='btn btn-info') authorize
+          button(type='submit', class='btn btn-info') authorize

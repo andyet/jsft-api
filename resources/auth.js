@@ -21,7 +21,7 @@ module.exports = function () {
         path: '/authorize',
         handler: function (request, reply) {
             var client_id = request.query.client_id;
-            var redirect_uri = request.query.redirect_uri;
+            var redirect_uri = request.query.redirect_uri || '';
             var response_type = request.query.response_type;
 
             reply.view('authorize', {
