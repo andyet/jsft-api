@@ -31,7 +31,9 @@ var TweetFactory = new dulcimer.Model({
     keyType: 'uuid',
     savePrivate: true,
     onSave: function (err, details, done) {
-        TweetFactory.events.emit('save', details.model);
+        process.nextTick(function () {
+            TweetFactory.events.emit('save', details.model);
+        });
         done();
     }
 });

@@ -1,5 +1,4 @@
 var Hapi = require('hapi');
-var Primus = require('primus');
 var multiplex = require('primus-multiplex');
 var substream = require('substream');
 var _ = require('underscore');
@@ -34,14 +33,6 @@ dulcimer.connect({
 var Tweet = require('./models/tweet');
 var User = require('./models/user');
 
-function channelNameForUser(userId, channelType, done) {
-    User.get(userId, function (err, user) {
-        if (err) console.error(err);
-
-        var channel = '/users/' + user.username + '/' + channelType;
-        done(null, channel);
-    });
-}
 
 server.pack.register(require('lout'), function () {});
 server.pack.register(require('hapi-auth-basic'), function () {
@@ -55,27 +46,12 @@ server.pack.register(require('hapi-auth-basic'), function () {
             plugin: require('mudskipper'),
             options: { resources: resources }
         },
+        {
+            plugin: require('./notify'),
+            options: { publicUrl: config.http.publicUrl }
+        }
     ], function (err) {
         if (err) throw err;
-
-        var primus = new Primus(server.listener, { transformer: 'engine.io' });
-        primus.use('substream', substream);
-
-        primus.on('connection', function (spark) {
-            Tweet.events.on('save', function (model) {
-                spark.substream('/howls').write(model);
-
-                channelNameForUser(model.user, 'howls', function (err, channelName) {
-                    spark.substream(channelName).write(model);
-                });
-
-                _.flatten(model.mentions).forEach(function (userId) {
-                    channelNameForUser(userId, 'marks', function (err, channelName) {
-                        spark.substream(channelName).write(model);
-                    });
-                });
-            });
-        });
 
         server.route(require('./resources/auth')());
         server.route(require('./resources/client')());

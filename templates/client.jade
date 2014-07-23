@@ -1,10 +1,9 @@
-script(src='/primus/primus.js')
-
 h1 Hi!
+h2 open the console
 
 script.
-  var primus = Primus.connect(window.location.origin, {  });
-
-  primus.substream('/howls').on('data', console.log.bind(console, '/tweets'));
-  primus.substream('/wolves/philip/howls').on('data', console.log.bind(console, '/wolves/philip/howls'));
-  primus.substream('/wolves/philip/mentions').on('data', console.log.bind(console, '/wolves/philip/mentions'));
+  var events = new EventSource('/notify');
+  events.onmessage = function (event) {
+    var data = JSON.parse(event.data);
+    console.log(data);
+  };
