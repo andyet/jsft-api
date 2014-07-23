@@ -3,9 +3,16 @@ var _ = require('underscore');
 
 var Tweets = require('./models/tweet');
 var User = require('./models/user');
-
+var WSS = require('ws').Server;
 
 module.exports.register = function (plugin, options, next) {
+    var wss = new WSS({ server: plugin.servers[0].listener });
+    wss.broadcast = function (data) {
+        this.clients.forEach(function (client) {
+            client.send(data);
+        });
+    };
+
     var routes = [];
     var channelNameForUser = function (userId, channelType, done) {
         User.get(userId, function (err, user) {
@@ -16,14 +23,12 @@ module.exports.register = function (plugin, options, next) {
         });
     };
 
-    var tweetChannel = new Stream.PassThrough();
-    tweetChannel.sendNotification = function (data) {
-        console.log('Write', data);
-        this.write('data: ' + JSON.stringify(data) + '\n\n');       
+    var sendNotification = function (data) {
+        wss.broadcast(JSON.stringify(data));
     };
 
     var pushHowl = function (model) {
-        tweetChannel.sendNotification({
+        sendNotification({
             action: 'update',
             channel: options.publicUrl + '/howls',
             url: options.publicUrl + '/howls/' + model.id
@@ -34,7 +39,7 @@ module.exports.register = function (plugin, options, next) {
         channelNameForUser(model.user, 'howls', function (err, channelName) {
             if (err) return console.log(err);
 
-            tweetChannel.sendNotification({
+            sendNotification({
                 action: 'update',
                 channel: channelName,
                 url: options.publicUrl + '/howls/' + model.id
@@ -45,7 +50,7 @@ module.exports.register = function (plugin, options, next) {
     var pushUserMarks = function (model) {
         _.flatten(model.mentions).forEach(function (userId) {
             channelNameForUser(userId, 'marks', function (err, channelName) {
-                tweetChannel.sendNotification({
+                sendNotification({
                     action: 'update',
                     channel: channelName,
                     url: options.publicUrl + '/howls' + model.id
@@ -58,19 +63,6 @@ module.exports.register = function (plugin, options, next) {
         pushHowl(model);
         pushUserHowl(model);
         pushUserMarks(model);
-    });
-
-    plugin.route({
-        method: 'GET',
-        path: '/notify',
-        handler: function (request, reply) {
-            var response = reply(tweetChannel);
-            response.code(200)
-                    .type('text/event-stream')
-                    .header('Connection', 'keep-alive')
-                    .header('Cache-Control', 'no-cache')
-                    .header('Content-Encoding', 'identity');
-        }
     });
 
     next();

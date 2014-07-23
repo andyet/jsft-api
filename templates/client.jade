@@ -2,7 +2,7 @@ h1 Hi!
 h2 open the console
 
 script.
-  var events = new EventSource('/notify');
+  var events = new WebSocket('ws://' + window.location.host);
   events.onmessage = function (event) {
     var data = JSON.parse(event.data);
     console.log(data);
