@@ -1,7 +1,10 @@
+var Joi = require('joi');
 var User = require('../models/user');
 
 module.exports = {
-    hasMany: ['howls', 'marks'],
+    hasMany: ['howls', {
+        marks: require('./mentions')
+    }],
 
     index: {
         handler: function (request, reply) {
@@ -9,29 +12,57 @@ module.exports = {
                 if (err) return reply(new Error(err));
                 reply(users);
             });
+        },
+        config: {
+            description: "List all the wolves (users) with accounts.",
+            notes: [
+                '<pre>',
+                '[',
+                '    {',
+                '        id: "36d872a1-4529-449a-8c83-64f86c20ab53",',
+                '        username: "wawooo"',
+                '    },',
+                '    {',
+                '        id: "68afc9e1-cb03-4fed-a91f-5521ebb4afc9",',
+                '        username: "ike"',
+                '    },',
+                ']',
+                '</pre>'
+            ].join('\n')
         }
     },
 
-    create: function (request, reply) {
-        var user = User.create(request.payload);
+    create: {
+        handler: function (request, reply) {
+            var user = User.create(request.payload);
 
-        if ( (!user.username || user.username.trim() === '') || (!user.password || user.password.trim() === '')) {
-            return reply().redirect('/signup?err=' + encodeURIComponent('username and password are both required') + '&username=' + encodeURIComponent(user.username || ''));
-        }
-
-        User.findByIndex('username', user.username, function (err, existingUser) {
-
-            if (existingUser) {
-                var errMessage = 'A wolf with username ' + user.username + ' already exists';
-                return reply().redirect('/signup?err=' + encodeURIComponent(errMessage));
+            if ( (!user.username || user.username.trim() === '') || (!user.password || user.password.trim() === '')) {
+                return reply().redirect('/signup?err=' + encodeURIComponent('username and password are both required') + '&username=' + encodeURIComponent(user.username || ''));
             }
 
-            user.save(function (err) {
-                if (err) return reply(new Error(err));
+            User.findByIndex('username', user.username, function (err, existingUser) {
 
-                reply.view('registered', { username: user.username });
+                if (existingUser) {
+                    var errMessage = 'A wolf with username ' + user.username + ' already exists';
+                    return reply().redirect('/signup?err=' + encodeURIComponent(errMessage));
+                }
+
+                user.save(function (err) {
+                    if (err) return reply(new Error(err));
+
+                    reply.view('registered', { username: user.username });
+                });
             });
-        });
+        },
+        config: {
+            description: "Create a new account",
+            validate: {
+                payload: {
+                    username: Joi.string(),
+                    password: Joi.string()
+                }
+            }
+        }
     },
 
     show: {
@@ -66,7 +97,7 @@ module.exports = {
             auth: {
                 strategy: 'token',
                 mode: 'try'
-            }
+            },
         }
     }
 };

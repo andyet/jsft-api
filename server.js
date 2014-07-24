@@ -17,7 +17,6 @@ var server = new Hapi.Server(config.http.host, config.http.port, {
 
 var resources = {
     wolves: require('./resources/users'),
-    marks: require('./resources/mentions'),
     howls: require('./resources/tweets')
 };
 
@@ -55,6 +54,15 @@ server.pack.register(require('hapi-auth-basic'), function () {
 
         server.route(require('./resources/auth')());
         server.route(require('./resources/client')());
+        server.route({
+            method: 'GET',
+            path: '/public/{param*}',
+            handler: {
+                directory: {
+                    path: 'public'
+                }
+            }
+        });
 
         server.start(function () {
             console.log('Server started at', server.info.uri);
