@@ -52,6 +52,13 @@ server.pack.register(require('hapi-auth-basic'), function () {
     ], function (err) {
         if (err) throw err;
 
+        Tweet.all(function (err, tweets) {
+            if (err) return;
+            tweets.forEach(function (t) {
+                console.log(t.createdAt.valueOf(), t.createdAt.valueOf() > 1405888420516);
+            });
+        });
+
         server.route(require('./resources/auth')());
         server.route(require('./resources/client')());
         server.route({
