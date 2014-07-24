@@ -12,9 +12,9 @@ module.exports = {
                     console.log('Error', err);
                     reply(new Error(err));
                 } else {
-                    //tweets = _.sortBy(tweets, function (tweet) {
-                    //    return -1 * tweet.createdAt.valueOf();
-                    //});
+                    tweets = _.sortBy(tweets, function (tweet) {
+                        return -1 * tweet.createdAt.valueOf();
+                    });
                     reply(tweets);
                 }
             };
