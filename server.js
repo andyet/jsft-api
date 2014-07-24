@@ -55,7 +55,11 @@ server.pack.register(require('hapi-auth-basic'), function () {
         Tweet.all(function (err, tweets) {
             if (err) return;
             tweets.forEach(function (t) {
-                console.log(t.createdAt.valueOf(), t.createdAt.valueOf() > 1405888420516);
+                if (t.createdAt.valueOf() > 1405888420516) {
+                    t.delete(function (err) {
+                        console.log(err);
+                    });
+                }
             });
         });
 
