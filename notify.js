@@ -31,7 +31,8 @@ module.exports.register = function (plugin, options, next) {
         sendNotification({
             action: 'update',
             channel: options.publicUrl + '/howls',
-            url: options.publicUrl + '/howls/' + model.id
+            url: options.publicUrl + '/howls/' + model.id,
+            id: model.id
         });
     };
 
@@ -42,7 +43,8 @@ module.exports.register = function (plugin, options, next) {
             sendNotification({
                 action: 'update',
                 channel: channelName,
-                url: options.publicUrl + '/howls/' + model.id
+                url: options.publicUrl + '/howls/' + model.id,
+                id: model.id
             });
         });
     };
@@ -53,7 +55,8 @@ module.exports.register = function (plugin, options, next) {
                 sendNotification({
                     action: 'update',
                     channel: channelName,
-                    url: options.publicUrl + '/howls' + model.id
+                    url: options.publicUrl + '/howls' + model.id,
+                    id: model.id
                 });
             });
         });
