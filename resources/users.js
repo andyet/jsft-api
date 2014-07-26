@@ -68,6 +68,7 @@ module.exports = {
     show: {
         handler: function (request, reply) {
             var username = request.params.wolf_id;
+            console.log(request.params);
 
             if (username === 'me') {
                 if (!request.auth.credentials) {
