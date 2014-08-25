@@ -6,7 +6,7 @@ The wolves.technology has a simple realtime websocket endpoint to allow you to b
 
 * New howls that appear on the main timeline, e.g. new howls available at `http://wolves.technology/howls`
 * New howls by specific wolves, e.g. at `http://wolves.technology/wolves/philip/howls`
-* New holws that mention wolves, e.g. at http://wolves.technology/wolves/philip/marks`
+* New howls that mention wolves, e.g. at `http://wolves.technology/wolves/philip/marks`
 
 All of this data comes through a single websocket endpoint at `ws://wolves.technology`.
 
