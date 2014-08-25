@@ -1,6 +1,7 @@
 var User = require('../models/user');
 var Token = require('../models/token');
 var validateAuth = require('../validate-auth');
+var joi = require('joi');
 
 module.exports = function () {
     var routes = [];
@@ -13,6 +14,9 @@ module.exports = function () {
                 err: request.query.err,
                 username: request.query.username
             });
+        },
+        config: {
+            description: "Create an account on wolves.technology",
         }
     });
 
@@ -28,6 +32,14 @@ module.exports = function () {
                 client_id: client_id,
                 redirect_uri: redirect_uri
             });
+        },
+        config: {
+            description: "Url to send users to for 3rd party authorization.",
+            validate: {
+                params: {
+                    redirect_uri: joi.string().optional()
+                }
+            }
         }
     });
 

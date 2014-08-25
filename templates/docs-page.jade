@@ -1,0 +1,22 @@
+html
+  head
+    link(rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/styles/tomorrow.min.css")
+    link(rel='stylesheet' href='/public/css/docs.css')
+    script(src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/highlight.min.js")
+
+    script.
+      hljs.initHighlightingOnLoad();
+
+  body
+    nav.sidebar
+      include:md ../docs/nav.md
+    main
+      != content
+
+    script.
+      var links = document.querySelectorAll('nav a');
+      [].forEach.call(links, function (link) {
+        if (link.pathname === window.location.pathname) {
+          link.classList.add('active');
+        }
+      });

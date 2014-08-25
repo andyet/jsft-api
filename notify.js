@@ -55,7 +55,7 @@ module.exports.register = function (plugin, options, next) {
                 sendNotification({
                     action: 'update',
                     channel: channelName,
-                    url: options.publicUrl + '/howls' + model.id,
+                    url: options.publicUrl + '/howls/' + model.id,
                     id: model.id
                 });
             });
