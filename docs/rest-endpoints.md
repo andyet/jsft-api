@@ -111,10 +111,13 @@ Create a new howl for the current user.
 
     ```
     {
-        "id": "8b5b9429-f305-4354-a576-b5f5108c1cc8",
-        "content":"Hello @luke and @henrik",
-        "createdAt":"1408972906870",
-        "user":"a609a5ea-81dc-46c3-9aa0-c98fffd1d3c4"
+        id: "8b5b9429-f305-4354-a576-b5f5108c1cc8",
+        content:"Hello @luke and @henrik",
+        createdAt:"1408972906870",
+        user: {
+            id: "a609a5ea-81dc-46c3-9aa0-c98fffd1d3c4",
+            username: "philip"
+        }
     }
     ```
 

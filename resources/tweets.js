@@ -57,7 +57,11 @@ module.exports = {
                 tweet.save(function (err) {
                     if (err) return reply(new Error(err));
 
-                    reply(tweet);
+                    //To rehydrate with nested user
+                    Tweets.get(tweet.id, function (Err, tweet) {
+                        if (err) return reply(new Error(err));
+                        reply(tweet);
+                    });
                 });
             });
 
