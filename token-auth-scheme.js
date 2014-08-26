@@ -1,4 +1,5 @@
 var Token = require('./models/token');
+var hapi = require('hapi');
 
 module.exports = function (server, options) {
     return {
@@ -6,10 +7,10 @@ module.exports = function (server, options) {
             console.log(request, reply);
             var tokenId = request.headers['auth-token'];
 
-            if (!tokenId) return reply(new Error('No auth'));
+            if (!tokenId) return reply(hapi.error.badRequest("No 'Auth-Token' header provided"));
 
             Token.get(tokenId, function (err, token) {
-                if (err) return reply(new Error(err));
+                if (err) return reply(hapi.error.badRequest("Invalid 'Auth-Token' header"));
 
                 reply(false, { credentials: token.user });
             });
