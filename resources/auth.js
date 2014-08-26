@@ -30,7 +30,8 @@ module.exports = function () {
 
             reply.view('authorize', {
                 client_id: client_id,
-                redirect_uri: redirect_uri
+                redirect_uri: redirect_uri,
+                invalid: request.query.invalid
             });
         },
         config: {
@@ -48,8 +49,11 @@ module.exports = function () {
         path: '/authorize',
         handler: function (request, reply) {
             validateAuth(request.payload.username, request.payload.password, function (err, valid, user) {
+                console.log(err, valid, user);
                 if (err) return reply(new Error(err));
-                if (!valid) return reply(new Error('Invalid details'));
+                if (!valid) {
+                    return reply().redirect('/authorize?invalid=true&redirect_uri=' + request.payload.redirect_uri);
+                }
 
                 var token = Token.create({ user: user.id });
                 token.save(function (err) {

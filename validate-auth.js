@@ -1,6 +1,11 @@
 var User = require('./models/user');
 
 module.exports = function (username, password, done) {
+    if (!username || username.trim() === '') {
+        console.log('Username not supplied');
+        return done(null, false);
+    }
+
     User.findByIndex('username', username, function (err, user) {
         if (err) {
             console.log('Error finding user by username');

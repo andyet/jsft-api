@@ -47,10 +47,15 @@ module.exports = {
                     return reply().redirect('/signup?err=' + encodeURIComponent(errMessage));
                 }
 
-                user.save(function (err) {
-                    if (err) return reply(new Error(err));
+                user.hashPassword(user.password, function (err, hash) {
+                    if (err) { return reply(err); }
+                    user.password = hash;
 
-                    reply.view('registered', { username: user.username });
+                    user.save(function (err) {
+                        if (err) return reply(new Error(err));
+
+                        reply.view('registered', { username: user.username });
+                    });
                 });
             });
         },

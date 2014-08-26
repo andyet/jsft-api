@@ -16,12 +16,16 @@ block content
           input(name='client_id', value=client_id, type='hidden')
           input(name='redirect_uri', value=redirect_uri, type='hidden')
 
+          if invalid
+            div.alert.alert-error(style="background: rgb(255, 225, 225)")
+              p Your username or password were incorrect.
+
           .form-group
             label Username
             input(name='username', placeholder='username', class='form-control')
 
           .form-group
             label Password
-            input(name='password', placeholder='password', class='form-control')
+            input(name='password', type='password', placeholder='password', class='form-control')
 
           button(type='submit', class='btn btn-info') authorize
