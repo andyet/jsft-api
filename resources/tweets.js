@@ -19,7 +19,7 @@ module.exports = {
                     });
 
                     if (limit) {
-                        tweets = tweetes.slice(0, limit);
+                        tweets = tweets.slice(0, limit);
                     }
 
                     reply(tweets);
