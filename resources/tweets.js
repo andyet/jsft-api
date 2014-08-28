@@ -32,7 +32,7 @@ module.exports = {
             if (!username) {
                 var options = {};
                 if (!sort && limit) { options.limit = limit; }
-                Tweets.all(response, options);
+                Tweets.all(options, response);
             } else {
                 User.findByIndex('username', username, function (err, user) {
                     if (err || !user) {
