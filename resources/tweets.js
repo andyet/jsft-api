@@ -7,6 +7,8 @@ module.exports = {
     index: {
         handler: function (request, reply) {
             var username = request.params.wolf_id;
+            var limit = request.query.limit && parseInt(request.query.limit);
+
             var response = function (err, tweets) {
                 if (err) {
                     console.log('Error', err);
@@ -15,6 +17,11 @@ module.exports = {
                     tweets = _.sortBy(tweets, function (tweet) {
                         return -1 * tweet.createdAt.valueOf();
                     });
+
+                    if (limit) {
+                        tweets = tweetes.slice(0, limit);
+                    }
+
                     reply(tweets);
                 }
             };
