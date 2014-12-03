@@ -13,7 +13,7 @@
     "async": "^0.9.0",
     "bcrypt": "^0.8.0",
     "bucker": "^1.0.11",
-    "dulcimer": "^2.0.8",
+    "dulcimer": "^2.5.0",
     "engine.io": "^1.3.1",
     "getconfig": "^0.3.0",
     "hapi": "^6.2.0",
