@@ -9,6 +9,7 @@ module.exports = {
     index: {
         handler: function (request, reply) {
             var username = request.params.wolf_id;
+            var limit = request.query.limit && parseInt(request.query.limit, 10);
 
             var response = function (err, tweets) {
                 if (err) {
