@@ -23,7 +23,8 @@ module.exports = {
             if (!username) {
                 var options = {};
                 options.limit = limit || 50;
-                options.sortBy = '-createdAt';
+                options.sortBy = 'createdAt';
+                options.reverse = true;
                 Tweets.all(options, response);
             } else {
                 User.findByIndex('username', username, function (err, user) {

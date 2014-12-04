@@ -3,8 +3,7 @@ var dulcimer = require('dulcimer');
 var TokenFactory = new dulcimer.Model({
     id: {
         derive: function () {
-            var keysplit = this.key.split('!');
-            return keysplit[keysplit.length - 1];
+            return this.key;
         }
     },
     user: { 
