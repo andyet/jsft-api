@@ -13,6 +13,7 @@ var TweetFactory = new dulcimer.Model({
 
     createdAt: {
         type: 'string',
+        index: true,
         required: true,
         default: function () { return '1405888420516'; }
     },

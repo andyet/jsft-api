@@ -3,35 +3,28 @@ var User = require('../models/user');
 var findMentions = require('../find-mentions');
 var _ = require('underscore');
 
+
+
 module.exports = {
     index: {
         handler: function (request, reply) {
             var username = request.params.wolf_id;
-            var limit = request.query.limit && parseInt(request.query.limit);
-            var sort = request.query.sort !== 'false';
+            var limit = request.query.limit && parseInt(request.query.limit, 10);
 
             var response = function (err, tweets) {
                 if (err) {
                     console.log('Error', err);
                     reply(new Error(err));
                 } else {
-                    if (sort) {
-                        tweets = _.sortBy(tweets, function (tweet) {
-                            return -1 * tweet.createdAt.valueOf();
-                        });
-                    }
-
-                    if (limit) {
-                        tweets = tweets.slice(0, limit);
-                    }
-
                     reply(tweets);
                 }
             };
 
             if (!username) {
                 var options = {};
-                if (!sort && limit) { options.limit = limit; }
+                options.limit = limit || 50;
+                options.sortBy = 'createdAt';
+                options.reverse = true;
                 Tweets.all(options, response);
             } else {
                 User.findByIndex('username', username, function (err, user) {
